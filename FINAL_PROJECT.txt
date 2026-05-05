@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#Project name: Advanced Payroll & Overtime Management System
+
+mkdir -p Employee_Payroll
+cd Employee_Payroll
+
+while true 
+do
+echo -e "Choose the option you want to do
+Add New Employee (1)
+Employee Timesheet (2)
+Employee Payroll (3)
+View Employees (4)
+Quit (5)
+Select your option --> \c"
+read CHOICE
+
+case $CHOICE in
+1) 	
+echo -e "\n######################### EMPLOYEE INFORMATION #########################"
+
+echo -e "\nPlease enter the employee last name --> \c"
+read LNAME
+
+echo -e "\nPlease enter the employee first name --> \c"
+read FNAME
+
+mkdir ${LNAME}_${FNAME}
+cd ${LNAME}_${FNAME}
+touch ${LNAME}_${FNAME}_INFORMATION.txt
+
+echo -e "\nPlease enter the employee's date of birth (MM/DD/YY) --> \c"
+read BIRTHDAY
+
+echo -e "\nPlease enter the emplyee's gender (Male/Female) --> \c"
+read GENDER
+
+echo -e "\nPlease enter the employee's start date (MM/DD/YY) --> \c"
+read DATE
+
+echo -e "\nPlease enter the employee's work schedule (Type "ALL WEEK" for the entire week) Format: DAYS, WORKING HOURS --> \c"
+read SCHEDULE
+
+echo "Employee Name: ${LNAME} ${FNAME}" >> ${LNAME}_${FNAME}_INFORMATION.txt
+echo "Date of Birth: $BIRTHDAY" >> ${LNAME}_${FNAME}_INFORMATION.txt
+echo "Gender: $GENDER" >> ${LNAME}_${FNAME}_INFORMATION.txt
+echo "Start working on: $DATE" >> ${LNAME}_${FNAME}_INFORMATION.txt
+echo "Work Schedule: $SCHEDULE" >> ${LNAME}_${FNAME}_INFORMATION.txt
+
+echo -e "\n!!!!!!!!!!!!!!!!! EMPLOYEE INFORMATION HAS BEEN SUCCESSFULLY UPDATED. !!!!!!!!!!!!!!!!!"
+echo -e "\nThis is the information about new employee."
+cat ${LNAME}_${FNAME}_INFORMATION.txt
+cd ..
+echo -e "\n************************************************************************"
+;;
+2)
+;;
+3)
+;;
+4) 
+echo -e "\nPlease enter the last name of the employee you would like to view --> \c"
+read LNAME
+
+echo -e "\nPlease enter the first name of the employee you would like to view --> \c"
+read FNAME
+
+if [[ -d ${LNAME}_${FNAME} ]]
+then
+echo -e "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SEARCH COMPLETE. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo -e "\nThis is the information about the employee you want to view."
+cd ${LNAME}_${FNAME}
+cat ${LNAME}_${FNAME}_INFORMATION.txt
+cd ..
+else 
+echo -e "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SEARCH COMPLETE. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo -e "\nNOTICE: NAME MISSPELLED OR EMPLOYEE DATA NOT FOUND. PLEASE CHECK AND TRY AGAIN."
+fi
+
+echo -e "\n************************************************************************"
+;;
+
+5)	 exit
+;;
+
+esac
+done
