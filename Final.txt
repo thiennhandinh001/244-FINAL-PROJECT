@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#Project: Logistics Inventory Management System
+
+mkdir -p Inventory_Management
+cd Inventory_Management
+
+DB_FILE="inventory.txt"
+LOG_FILE="activity_log.txt"
+USER_DB="users.txt"
+touch $DB_FILE $LOG_FILE $USER_DB
+
+echo -e "===================================================="
+echo -e "        LOGISTICS INVENTORY MANAGEMENT SYSTEM       "
+echo -e "===================================================="
+while true
+do
+echo -e "\nChoose the option you want to do:
+1) Log in
+2) Create Account
+3) Quit"
+echo -e "Select your option --> \c"
+read CHOICE
+case $CHOICE in
+1)
+;;
+2) echo -e "\n------------------------------ CREATE NEW ACCOUNT ------------------------------"
+echo -n "Enter username: "
+read NEW_USER
+if grep -q "^$NEW_USER|" "$USER_DB"; then
+	echo -e "\nERROR: USERNAME ALREADY EXISTS! PLEASE CHOOSE ANOTHER ONE."
+else
+	echo -n "Enter password: "
+	read -s NEW_PASS
+	echo -e "\nSelect Role: "
+	echo "1) Admin"
+	echo "2) Staff"
+	echo -e "Select option [1-2] --> \c"
+	read ROLE_CHOICE
+	case $ROLE_CHOICE in
+		1) NEW_ROLE="ADMIN" ;;
+		2) NEW_ROLE="STAFF" ;;
+	esac
+	if [[ -n "$NEW_ROLE" ]]; then 
+		echo "$NEW_USER|$NEW_PASS|$NEW_ROLE" >> "$USER_DB"
+		echo -e "\n[SUCCESS] ACCOUNT CREATED FOR $NEW_USER AS $NEW_ROLE."
+	else
+		echo -e "\nERROR: INVALID ROLE SELECTED. ACCOUNT CREATION FAILED."
+	fi
+fi
+;;
+3) exit
+;;
+esac 
+done
+
+
